@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
 function App() {
   const [ input, setInput ] = useState('')
   const [ city, setCity ] = useState('London')
-  const [ weatherDisplay, setWeatherDisplay ] = useState({})
+  const [ weatherDisplay, setWeatherDisplay ] = useState([])
   const [test, setTest ] = useState("")
   
   useEffect(() => {
@@ -27,14 +27,11 @@ function App() {
       fetch(weatherURL, options)
           .then(resp => resp.json())
           .then(data => setWeatherDisplay(data))
-          // .catch(err => console.error(err));
+          .catch(err => console.error(err));
   }, [])
 
-  console.log(weatherDisplay)
+console.log(weatherDisplay)
 
-
-
-  //console.log(weatherDisplay)
 
   return (
     <div className="mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400">
