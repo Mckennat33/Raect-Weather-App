@@ -14,8 +14,9 @@ function App() {
   const [test, setTest ] = useState("")
   
   useEffect(() => {
-      const options = {
-          method: 'GET',
+
+    const options = {
+      method: 'GET',
           headers: {
               'X-RapidAPI-Key': 'de51889a1fmshe095099b1a97993p13134fjsnc818ad7373cb',
               'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
@@ -26,13 +27,41 @@ function App() {
 
       fetch(weatherURL, options)
           .then(resp => resp.json())
-          .then(data => setWeatherDisplay(data))
+          .then(data => formatWeatherData(data))
           .catch(err => console.error(err));
+
   }, [])
 
-console.log(weatherDisplay)
+  const formatWeatherData = (data) => {
+    const {
+      condition: {
+        icon,
+        text
+      },
+      feelslike_f, 
+      gust_mph, 
+      humidity, 
+      wind_mph
+    } = data.current
+    
+    const {0: {
+      date
+    }} = data.forecast
+    
+    const {
+      country, 
+      localtime, 
+      name, 
+      region
+    } = data.location
 
+    console.log(date)
+    return icon, text, feelslike_f, gust_mph, humidity, wind_mph, country, localtime, name, region
+  }
 
+  
+
+          
   return (
     <div className="mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400">
       <TopCities />
