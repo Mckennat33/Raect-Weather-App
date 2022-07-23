@@ -44,9 +44,7 @@ function App() {
       wind_mph
     } = data.current
     
-    const {0: {
-      date
-    }} = data.forecast
+    const {} = data.forecast
     
     const {
       country, 
