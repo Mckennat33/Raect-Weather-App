@@ -1,36 +1,48 @@
 import React from 'react'
 import { UilSearchAlt, UilMapMarkerAlt } from '@iconscout/react-unicons'
+import { useState, useEffect } from 'react'
+import TimeLocation from './TimeLocation'
+
+function SearchBar({ setCity }) {
+
+    
+
+// function handleSubmit(event) {
+//     event.preventDefaul()
+//     setCity(input)
+// }
 
 
-
-
-
-
-function SearchBar() {
     return (
         <div className='flex flex-row justify-center my-6 '>
-            <div className='flex flex-row w-3/4 items-center justify-center space-x-4'>
-                
-                <input 
-                    type="text" 
-                    className='text-xl font-light p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase'
-                    placeholder='Search...'
+            <form 
+                className='flex flex-row w-3/4 items-center justify-center space-x-4'
+                //onSubmit={handleSubmit}
+            >
+                {/* {console.log(weatherDisplay.current)} */}
+                <div className='flex flex-row w-3/4 items-center justify-center space-x-4'>
+
+                    <input 
+                        type="text" 
+                        className='text-xl font-light p-2 w-full shadow-xl focus:outline-none capitalize placeholder:lowercase'
+                        placeholder='Search...'
+                        //onChange={event => setInput(event.target.value)}
                     />
-                <UilSearchAlt size={25} className="text-white cursor-pointer transition ease-out hover:scale-125" />
-                <UilMapMarkerAlt size={25} className="text-white cursor-pointer transition ease-out hover:scale-125" />
+                    <UilSearchAlt size={25} className="text-white cursor-pointer transition ease-out hover:scale-125" />
+                    <UilMapMarkerAlt size={25} className="text-white cursor-pointer transition ease-out hover:scale-125" />
 
-            </div>
+                </div>
 
-        <div className='flex flex-row w-1/4 items-center justify-center'>
+                <div className='flex flex-row w-1/4 items-center justify-center'>
+                    <button name='metric' className='text-xl text-white font-light'>°C</button>
 
-            <button name='metric' className='text-xl text-white font-light'>°C</button>
-            
-            <p className='text-xl text-white mx-1 '> | </p>
-            
-            <button name='imperial' className='text-xl text-white font-light'>°F</button>
-        
-        </div>
+                    <p className='text-xl text-white mx-1 '> | </p>
 
+                    <button name='imperial' className='text-xl text-white font-light'>°F</button>
+
+                </div>
+
+            </form>
         </div>
     )
 }

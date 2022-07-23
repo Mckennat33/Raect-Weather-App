@@ -15,6 +15,7 @@ function TimeLocation() {
             <div className='flex item-center justify-center my-3 '>
                 <p className='text-white text-3xl font-medium'>
                     Chicago
+                    
                     {/* Hardcoded */}
                 </p>
             </div>
