@@ -6,17 +6,16 @@ import TimeLocation from './components/TimeLocation';
 import CurrentWeather from './components/CurrentWeather';
 import Forecast from './components/Forecast';
 import { useEffect, useState } from "react"
+import { FeedSummary } from 'semantic-ui-react';
+
 
 function App() {
-  const [ input, setInput ] = useState('')
+  const [ weatherDisplay, setWeatherDisplay ] = useState({})
   const [ city, setCity ] = useState('London')
-  const [ weatherDisplay, setWeatherDisplay ] = useState([])
-  const [test, setTest ] = useState("")
-  
-  useEffect(() => {
 
-    const options = {
-      method: 'GET',
+  const searchCity = () => {
+      const options = {
+          method: 'GET',
           headers: {
               'X-RapidAPI-Key': 'de51889a1fmshe095099b1a97993p13134fjsnc818ad7373cb',
               'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
@@ -24,50 +23,54 @@ function App() {
       };
       
       const weatherURL = `https://weatherapi-com.p.rapidapi.com/forecast.json?q=${city}&days=3`
-
+      
       fetch(weatherURL, options)
-          .then(resp => resp.json())
-          .then(data => formatWeatherData(data))
-          .catch(err => console.error(err));
+      .then(resp => resp.json())
+      .then(data => formatWeatherData(data))
+      .catch(err => console.error(err));
+    }
 
-  }, [])
+  useEffect(() => {
+      searchCity()
+      
+    }, [city])
+
 
   const formatWeatherData = (data) => {
     const {
-      condition: {
-        icon,
-        text
-      },
-      feelslike_f, 
-      gust_mph, 
-      humidity, 
-      wind_mph
-    } = data.current
-    
-    const {} = data.forecast
-    
-    const {
-      country, 
-      localtime, 
-      name, 
-      region
-    } = data.location
-
-    console.log(date)
-    return icon, text, feelslike_f, gust_mph, humidity, wind_mph, country, localtime, name, region
-  }
-
+        condition: {
+          icon,
+          text
+        },
+        feelslike_f, 
+        gust_mph, 
+        humidity, 
+        wind_mph
+      } = data.current
   
+      const { 
+        forecast
+      } = data
+  
+      const {
+        country, 
+        localtime, 
+        name, 
+        region
+      } = data.location
 
-          
+      let newDataArray = [icon, text, feelslike_f, gust_mph, humidity, wind_mph, forecast, country, localtime, name, region]
+      setWeatherDisplay(newDataArray)
+    }
+
+
   return (
-    <div className="mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400">
+    <div className="mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400"> 
       <TopCities />
-      <SearchBar setCity={setCity} setInput={setInput} setWeatherDisplay={setWeatherDisplay} />
-      <TimeLocation  />
+      <SearchBar />  
+      <TimeLocation weatherDisplay={weatherDisplay} />
       <CurrentWeather />
       <Forecast  />
-      {/* <Forecast title="Daily forecast" /> */}
     </div>
   );
 }

@@ -1,8 +1,12 @@
+
 import React from 'react'
+import {useEffect, useState} from "react"
 
 
+function TimeLocation({weatherDisplay}) {
 
-function TimeLocation() {
+    console.log(weatherDisplay)
+
     return (
         <div>
             <div className='flex item-center justify-center my-6'>
@@ -15,6 +19,7 @@ function TimeLocation() {
             <div className='flex item-center justify-center my-3 '>
                 <p className='text-white text-3xl font-medium'>
                     Chicago
+                    
                     
                     {/* Hardcoded */}
                 </p>
