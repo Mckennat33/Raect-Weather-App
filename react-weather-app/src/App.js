@@ -11,6 +11,7 @@ import { FeedSummary } from 'semantic-ui-react';
 
 function App() {
   const [ weatherDisplay, setWeatherDisplay ] = useState({})
+  const [ input, setInput ] = useState('')
   const [ city, setCity ] = useState('London')
 
   const searchCity = () => {
@@ -59,20 +60,30 @@ function App() {
         region
       } = data.location
 
-      let newDataArray = [icon, text, feelslike_f, gust_mph, humidity, wind_mph, forecast, country, localtime, name, region]
+      const newDataArray = [icon, text, feelslike_f, gust_mph, humidity, wind_mph, forecast, country, localtime, name, region]
+
       setWeatherDisplay(newDataArray)
     }
-
+    
+    function handleSubmit(e) {
+      e.preventDefualt()
+      console.log(e)
+      setCity(input)
+    } 
+    
 
   return (
     <div className="mx-auto max-w-screen-md mt-4 py-5 px-32 bg-gradient-to-br from-cyan-700 to-blue-700 h-fit shadow-xl shadow-gray-400"> 
       <TopCities />
-      <SearchBar />  
-      <TimeLocation weatherDisplay={weatherDisplay} />
+      <SearchBar handleSubmit={ handleSubmit } setInput={ setInput }  />  
+      <TimeLocation weatherDisplay={ weatherDisplay } />
       <CurrentWeather />
       <Forecast  />
+      
     </div>
   );
 }
+
+// handleSubmit={ handleSubmit } setInput={ setInput } 
 
 export default App;
