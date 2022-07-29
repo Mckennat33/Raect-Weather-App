@@ -32,15 +32,6 @@ function SearchBar({ handleSubmit, setInput }) {
                     
                 </div>
             </form>
-
-            {/* 
-            This works without the TimeLocation, which I cant figure out for the life of me why its not working
-            - When I do this all the tailwind css is messed up so I need to figure that out. 
-            <CurrentWeather />
-            <Forecast  />
-            <TopCities />  
-            */}
-
         </div>
     )
 }
