@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import {
     UilArrowUP, 
     UilArrowDown, 
@@ -8,17 +9,14 @@ import {
     UilSun,
     UilSunset,
 } from "@iconscout/react-unicons"
+// import { findRenderedDOMComponentWithClass } from 'react-dom/test-utils'
 
 
 function CurrentWeather({ weatherDisplay }) {
-
-    // let foreCast = weatherDisplay ? JSON.parse(JSON.stringify(weatherDisplay)) : null
-    // let foreCastDay = foreCast.forecast ? foreCast.forecast.forecastday : null 
-    // let foreCastDayOne = foreCastDay ? foreCastDay[0].hour : null 
-    // const { } = foreCastDayOne
-    // console.log(foreCastDayOne)
+    const [ forecast, setForecast ] = useState([])
     
-
+    // console.log(weatherDisplay.hour)
+    // console.log(Object.values(weatherDisplay.hour))
 
     return (
         <div>
@@ -58,19 +56,19 @@ function CurrentWeather({ weatherDisplay }) {
         <div className='flex flex-row items-center justify-center space-x-2 text-white text-sm py-3'>
 
             <UilSun />
-            <p className='font-light'>Rise: 6:45 AM</p>
+            <p className='font-light'>Rise: {weatherDisplay.sunrise}</p>
             <p className='font-light'>|</p>
 
             <UilSunset />
-            <p className='font-light'>Set: 07:35 PM</p>
+            <p className='font-light'>Set: {weatherDisplay.sunset}</p>
             <p className='font-light'>|</p>
             
             <UilSun />
-            <p className='font-light'>Low: 45°</p>
+            <p className='font-light'>Low: {weatherDisplay.mintemp_f?.toFixed()}</p>
             <p className='font-light'>|</p>
             
             <UilSun />
-            <p className='font-light'>Rise: 40°</p>
+            <p className='font-light'>Rise: {weatherDisplay.maxtemp_f?.toFixed()}</p>
             <p className='font-light'>|</p>
 
         </div>
@@ -79,4 +77,4 @@ function CurrentWeather({ weatherDisplay }) {
     )
 }
 
-export default CurrentWeather
+export default CurrentWeather;

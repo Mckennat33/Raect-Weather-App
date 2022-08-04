@@ -11,7 +11,7 @@ function App() {
   const [ weatherDisplay, setWeatherDisplay ] = useState({})
   const [ input, setInput ] = useState('')
   const [ city, setCity ] = useState('London')
-
+  const [loading, setLoading] = useState(true)
 
   const searchCity = () => {
       const options = {
@@ -23,11 +23,16 @@ function App() {
       };
       
       const weatherURL = `https://weatherapi-com.p.rapidapi.com/forecast.json?q=${city}&days=3`
-      
       fetch(weatherURL, options)
       .then(resp => resp.json())
-      .then(data =>  formatWeatherData(data))
+      .then(data =>{  
+        formatWeatherData(data)
+        setLoading(false)
+      })
       .catch(err => console.error(err));
+
+
+      if(loading) return <h1>Loading...</h1>
     }
 
   useEffect(() => {
@@ -36,6 +41,7 @@ function App() {
 
 
   const formatWeatherData = (data) => {
+    // console.log(data.forecast)
     const {
         condition: {
           icon,
@@ -47,11 +53,23 @@ function App() {
         temp_f,
         wind_mph
       } = data.current
-  
-      const { 
-        forecast
-      } = data
-  
+
+      
+        const {
+            forecastday: [{
+              astro: {
+                sunrise, 
+                sunset
+              }, 
+              date, 
+              day: {
+                maxtemp_f, 
+                mintemp_f
+              }, 
+              hour
+            }]
+        } = data.forecast
+        
       const {
         country, 
         localtime, 
@@ -59,15 +77,11 @@ function App() {
         region
       } = data.location
 
-      const newDataArray = { icon, text, feelslike_f, gust_mph, humidity, temp_f, wind_mph, forecast, country, localtime, name, region }
-
-      console.log(newDataArray)
-
+      const newDataArray = { icon, text, feelslike_f, gust_mph, humidity, sunrise, sunset, date, maxtemp_f, mintemp_f, hour, temp_f, wind_mph, country, localtime, name, region }
       setWeatherDisplay(newDataArray)
     }
 
     
-
     function handleSubmit(e) {
       e.preventDefault()
       setCity(input)
@@ -102,12 +116,13 @@ function App() {
         </div>
     </form>
 </div>
-
       {/* <TopCities /> 
       <SearchBar />   */}
       <TimeLocation weatherDisplay={ weatherDisplay } />
       <CurrentWeather weatherDisplay={ weatherDisplay } />
-      <Forecast  />      
+      <Forecast  />   
+      <br />
+      <pre>{JSON.stringify(weatherDisplay, null, 2)}</pre>  
     </div>
   );
 }
